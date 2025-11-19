@@ -77,4 +77,4 @@ channel.exchange_declare(exchange='romantic-decision', exchange_type='fanout')
 
 logging.info("Esperando aprobaciones para tomar una decisión final... ")
 channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-channel.start_consuming() 
+channel.start_consuming()
