@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: suitor-container
-        image: tu_nombre_de_usuario/suitor-service:latest
+        image: jachuone/suitor-service:latest
         env:
         - name: RABBITMQ_HOST
           valueFrom:
@@ -22,4 +22,4 @@ spec:
               name: rabbitmq-config
               key: RABBITMQ_HOST
         - name: SUITOR_NAME
-          value: "Guillermo"
+          value: "James"

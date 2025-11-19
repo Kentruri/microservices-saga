@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: girl-container
-        image: tu_nombre_de_usuario/girl-service:latest
+        image: jachuone/girl-service:latest
         env:
         - name: RABBITMQ_HOST
           valueFrom:

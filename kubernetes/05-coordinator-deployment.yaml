@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: coordinator-container
-        image: tu_nombre_de_usuario/love-coordinator:latest
+        image: jachuone/love-coordinator:latest
         env:
         - name: RABBITMQ_HOST
           valueFrom:
