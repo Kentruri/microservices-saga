@@ -27,42 +27,42 @@ def decide(suitor_name):
     status = approval_state[suitor_name]
 
     if status["mom"] is None or status["dad"] is None:
-        return None
-        
-    if status["mom"] == "rejected" or status["dad"] == "rejected":
-        return "REJECTED"
-        
-    if status["mom"] == "approved" and status["dad"] == "approved":
-        return "APPROVED"
-        
-    return None
+        return None
+
+    if status["mom"] == "rejected" or status["dad"] == "rejected":
+        return "REJECTED"
+
+    if status["mom"] == "approved" and status["dad"] == "approved":
+        return "APPROVED"
+
+    return None
 
 def callback(ch, method, properties, body):
-    msg = body.decode()
-    
-    try:
-        _, parent, result, suitor_msg = msg.split(":", 3)
-        suitor_name = suitor_msg.split()[0] 
-        
-    except ValueError:
-        logging.error(f"Formato de mensaje no reconocido: {msg}")
-        return
-        
-    approval_state[suitor_name][parent.lower()] = result.lower()
+    msg = body.decode()
 
-    final_status = decide(suitor_name)
-    
-    if final_status:
-        final_msg = f"Relación con {suitor_name} fue {final_status}"
-        
-        channel.basic_publish(
-            exchange='romantic-decision',
-            routing_key='',
-            body=final_msg.encode()
-        )
-        logging.info(f" Resultado FINAL enviado: {final_msg}")
-        
-        del approval_state[suitor_name]
+    try:
+        _, parent, result, suitor_msg = msg.split(":", 3)
+        suitor_name = suitor_msg.split()[0] 
+
+    except ValueError:
+        logging.error(f"Formato de mensaje no reconocido: {msg}")
+        return
+
+    approval_state[suitor_name][parent.lower()] = result.lower()
+
+    final_status = decide(suitor_name)
+
+    if final_status:
+        final_msg = f"Relación con {suitor_name} fue {final_status}"
+
+        channel.basic_publish(
+            exchange='romantic-decision',
+            routing_key='',
+            body=final_msg.encode()
+        )
+        logging.info(f" Resultado FINAL enviado: {final_msg}")
+
+        del approval_state[suitor_name]
 
 
 connection = connect()
